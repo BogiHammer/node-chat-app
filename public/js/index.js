@@ -12,7 +12,3 @@ socket.on('disconnect', function () {
 socket.on('newMessage', function (message) {
   console.log('New user', message);
 });
-
-// socket.on('welcomeMessage', function (message) {
-//   console.log('welcome message: ', message);
-// });
