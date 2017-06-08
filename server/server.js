@@ -15,24 +15,40 @@ var io = socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
-    console.log('New user connected!');
-
-    socket.on('createMessage', (message)=> {
-        console.log('createMessage', message);
-        io.emit('newMessage', {
-            from: message.from,
-            text: message.text,
-            createdAt: new Date().getTime()
-        });
+  console.log('New user connected!');
+//  *************
+  socket.emit('newMessage', {
+    from: 'Admin',
+    message: 'Welcome to the chatroom',
+    createdAt: new Date().getTime()
+  });
+  socket.broadcast.emit('newMessage', {
+    from: 'admin',
+    message: 'new user joined',
+    createdAt: new Date().getTime()
+  });
+// *******************
+  socket.on('createMessage', (message) => {
+    console.log('createMessage', message);
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
     });
 
-    socket.on('disconnect', () => {
-        console.log('Client disconneted!');
-    });
+    // socket.broadcast.emit('newMessage', {
+    //   from: message.from,
+    //   text: message.text,
+    //   createdAt: new Date().getTime()
+    // });
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconneted!');
+  });
 });
 
 
 server.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
-
