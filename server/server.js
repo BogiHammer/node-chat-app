@@ -1,5 +1,3 @@
-// console.log(__dirname + '/../public');
-// console.log(publicPath);
 const express = require('express');
 const path = require('path');
 const http = require('http');
