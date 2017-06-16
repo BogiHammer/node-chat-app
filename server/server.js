@@ -34,6 +34,11 @@ io.on('connection', (socket) => {
     callback();
   });
 
+  socket.on('testing', (data)=> {
+    console.log(data);
+    io.emit('testData', data);
+  });
+
   socket.on('createMessage', (message, callback) => {
     var user = users.getUser(socket.id);
     if (user && isRealString(message.text)) {
